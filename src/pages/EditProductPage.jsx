@@ -3,7 +3,7 @@ import SideBar from "../components/sideBar";
 import { FiHome, FiCamera } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-export default function AddProductPage() {
+export default function EditProductPage() {
   const [image, setImage] = useState(null);
   const [fileName, setFileName] = useState("No selected file");
   return (
@@ -17,10 +17,10 @@ export default function AddProductPage() {
         </div>
         <div className="flex flex-col gap-2 items-center">
           <h1 className="text-2xl font-win relative pt-2 sm:pt-3 md:pt-3 ">
-            Tambahkan Produk
+            Edit Produk
           </h1>
           <p className="text-[12px] font-win font-light ">
-            Tambahkan Produk Anda Disini
+            Edit Produk Anda Disini
           </p>
         </div>
 
@@ -112,8 +112,8 @@ export default function AddProductPage() {
             Kirim
           </button>
           <Link
-            to='/productPage'
-            className="bg-[#331FA8] px-2 py-2 w-24 mb-4 rounded-md text-center text-white font-win font-light"
+            to="/productPage"
+            className="bg-[#331FA8] px-2 py-2 w-24 mb-4 rounded-md text-white text-center font-win font-light"
           >
             Kembali
           </Link>
