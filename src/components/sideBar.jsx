@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FiMenu, FiSmartphone, FiPackage, FiHome } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -39,14 +40,13 @@ export default function SideBar() {
               } hover:bg-[#331FA8] py-1  px-3 flex  justify-start items-center  gap-4 rounded-md `}
             >
               <FiHome className="text-white text-3xl" />
-              <a
-                href=""
+              <Link to="/"
                 className={`${
                   !isOpen && "scale-0 h-0 w-0"
                 } duration-500 text-white font-win text-sm font-light`}
               >
                 Home
-              </a>
+              </Link>
             </li>
 
             <li
@@ -55,14 +55,14 @@ export default function SideBar() {
               } hover:bg-[#331FA8]  py-1 px-3 flex justify-start items-center gap-4 rounded-md`}
             >
               <FiPackage className="text-white text-3xl" />
-              <a
-                href=""
+
+              <Link to="/productPage"
                 className={`${
                   !isOpen && "scale-0 h-0 w-0"
                 } duration-500 text-white font-win text-sm font-light`}
               >
                 Produk
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
