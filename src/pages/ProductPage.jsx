@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import SideBar from "../components/sideBar";
 import {
   FiHome,
@@ -32,14 +32,14 @@ export default function ProductPage() {
               placeholder="Search..."
             />
           </div>
-          <div className="flex bg-[#331FA8] px-14 py-3 gap-2 items-center rounded-md">
-            <a href="">
-              <FiPlus className="text-white text-lg" />
-            </a>
-            <Link to="/addProductPage" className="text-white font-win text-sm">
-              Menambahkan
-            </Link>
-          </div>
+
+          <Link
+            to="/addProductPage"
+            className="text-white flex justify-center items-center font-win text-sm bg-[#331FA8] px-14 py-3 gap-2 rounded-md"
+          >
+            <FiPlus className="text-white text-lg" />
+            Menambahkan
+          </Link>
         </div>
         <div className="overflow-x-scroll pt-5  sm:w-full">
           <table className="w-full mt-5 overflow-x-scroll">
@@ -78,25 +78,26 @@ export default function ProductPage() {
                 </td>
                 <td className="text-center text-md font-win font-medium">
                   <ul className="flex justify-around items-center">
-                    <li className="px-3 py-3 border border-black rounded-full border-solid">
-                      <a href="">
-                        <FiEdit2 className="text-xl" />
-                      </a>
-                    </li>
-                    <li className="px-3 py-3 border border-black rounded-full border-solid">
-                      <a href="">
+                    <Link
+                      to="/editProductPage"
+                      className="px-3 py-3 border border-black rounded-full border-solid"
+                    >
+                      <FiEdit2 className="text-xl" />
+                    </Link>
+                      <Link
+                      to="/detailProduct"
+                        className="px-3 py-3 border border-black rounded-full border-solid"
+                      >
                         <FiEye className="text-xl" />
-                      </a>
-                    </li>
-                    <li className="px-3 py-3 border border-black  rounded-full border-solid">
-                      <a href="">
+                      </Link>
+                      <a href="" 
+                      className="px-3 py-3 border border-black  rounded-full border-solid">
                         <FiTrash className="text-xl" />
                       </a>
-                    </li>
                   </ul>
                 </td>
               </tr>
-              <tr className="h-20 border-x-[1px] border-b-[1px] rounded-b-2xl ">
+              <tr className="h-20  border-x-[1px]   border-b-[1px] rounded-b-xl ">
                 <td className="text-center text-md font-win font-medium">
                   image
                 </td>
@@ -110,25 +111,27 @@ export default function ProductPage() {
                   IOS
                 </td>
                 <td className="text-center text-md font-win font-medium">
-                  <ul className="flex flex-wrap justify-around items-center">
-                    <li className="px-3 py-3 border border-black rounded-full border-solid">
-                      <a href="">
-                        <FiEdit2 className="text-xl" />
-                      </a>
-                    </li>
-                    <li className="px-3 py-3 border border-black rounded-full border-solid">
-                      <a href="">
+                  <ul className="flex justify-around items-center">
+                    <Link
+                      to="/editProductPage"
+                      className="px-3 py-3 border border-black rounded-full border-solid"
+                    >
+                      <FiEdit2 className="text-xl" />
+                    </Link>
+                      <Link
+                      to="/detailProduct"
+                        className="px-3 py-3 border border-black rounded-full border-solid"
+                      >
                         <FiEye className="text-xl" />
-                      </a>
-                    </li>
-                    <li className="px-3 py-3 border border-black  rounded-full border-solid">
-                      <a href="">
+                      </Link>
+                      <a href="" 
+                      className="px-3 py-3 border border-black  rounded-full border-solid">
                         <FiTrash className="text-xl" />
                       </a>
-                    </li>
                   </ul>
                 </td>
               </tr>
+              
             </tbody>
           </table>
         </div>
