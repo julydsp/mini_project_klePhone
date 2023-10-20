@@ -1,10 +1,10 @@
 
-import LoginPage from "./pages/LoginPage.jsx";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <>
-      <LoginPage/>
+      <HomePage/>
     </>
   );
 }
