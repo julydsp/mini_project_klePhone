@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SideBar from "../components/sideBar";
 import {
   FiHome,
@@ -7,9 +7,15 @@ import {
   FiEdit2,
   FiEye,
   FiTrash,
+  FiX,
 } from "react-icons/fi";
+import { useState } from "react";
+import ModalDetailProduct from "../components/modalDetailProduct";
 
 export default function ProductPage() {
+  const [isModal, setIsModal] = useState(false);
+
+  console.log("nilai", isModal);
   return (
     <div className="flex">
       <SideBar />
@@ -84,16 +90,18 @@ export default function ProductPage() {
                     >
                       <FiEdit2 className="text-xl" />
                     </Link>
-                      <Link
-                      to="/detailProduct"
-                        className="px-3 py-3 border border-black rounded-full border-solid"
-                      >
-                        <FiEye className="text-xl" />
-                      </Link>
-                      <a href="" 
-                      className="px-3 py-3 border border-black  rounded-full border-solid">
-                        <FiTrash className="text-xl" />
-                      </a>
+                    <div
+                      onClick={() => setIsModal(!isModal)}
+                      className="px-3 py-3 border border-black cursor-pointer rounded-full border-solid"
+                    >
+                      <FiEye className="text-xl" />
+                    </div>
+                    <a
+                      href=""
+                      className="px-3 py-3 border border-black  rounded-full border-solid"
+                    >
+                      <FiTrash className="text-xl" />
+                    </a>
                   </ul>
                 </td>
               </tr>
@@ -118,23 +126,42 @@ export default function ProductPage() {
                     >
                       <FiEdit2 className="text-xl" />
                     </Link>
-                      <Link
-                      to="/detailProduct"
-                        className="px-3 py-3 border border-black rounded-full border-solid"
+                    <div>
+                      <div
+                        onClick={() => setIsModal(!isModal)}
+                        className="px-3 py-3 border border-black cursor-pointer rounded-full border-solid"
                       >
                         <FiEye className="text-xl" />
-                      </Link>
-                      <a href="" 
-                      className="px-3 py-3 border border-black  rounded-full border-solid">
-                        <FiTrash className="text-xl" />
-                      </a>
+                      </div>
+                    </div>
+                    <a
+                      href=""
+                      className="px-3 py-3 border border-black  rounded-full border-solid"
+                    >
+                      <FiTrash className="text-xl" />
+                    </a>
                   </ul>
                 </td>
               </tr>
-              
             </tbody>
           </table>
         </div>
+        {isModal && (
+          <div
+            onClick={() => setIsModal(!isModal)}
+            className=" z-10 w-full flex justify-center items-center top-0 left-0 h-full absolute bg-gray-600/80 "
+          >
+            <div className=" z-10 top-0 h-full flex justify-center items-center fixed ">
+              <div className=" flex items-start justify-center duration-500">
+                <ModalDetailProduct isModal={isModal} />
+                <FiX
+                  onClick={() => setIsModal(!isModal)}
+                  className="text-3xl text-white"
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
