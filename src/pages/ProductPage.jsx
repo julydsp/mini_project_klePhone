@@ -47,7 +47,7 @@ export default function ProductPage() {
             Menambahkan
           </Link>
         </div>
-        <div className="overflow-x-scroll pt-5  sm:w-full">
+        <div className="overflow-x-scroll pt-5  w-full">
           <table className="w-full mt-5 overflow-x-scroll">
             <thead className="bg-[#6F6A6A]/10">
               <tr className="">
@@ -149,11 +149,11 @@ export default function ProductPage() {
         {isModal && (
           <div
             onClick={() => setIsModal(!isModal)}
-            className=" z-10 w-full flex justify-center items-center top-0 left-0 h-full absolute bg-gray-600/80 "
+            className="z-10 w-full flex justify-center items-center top-0 left-0 h-full absolute bg-gray-600/80 "
           >
             <div className=" z-10 top-0 h-full flex justify-center items-center fixed ">
               <div className=" flex items-start justify-center duration-500">
-                <ModalDetailProduct isModal={isModal} />
+                <ModalDetailProduct/>
                 <FiX
                   onClick={() => setIsModal(!isModal)}
                   className="text-3xl text-white"
