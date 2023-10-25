@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { FiMenu, FiSmartphone, FiPackage, FiHome } from "react-icons/fi";
+import {
+  FiMenu,
+  FiSmartphone,
+  FiPackage,
+  FiHome,
+  FiLogOut,
+} from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { authService } from "../configs/auth/auth";
 
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -65,6 +72,22 @@ export default function SideBar() {
                 } duration-500 text-white font-win text-sm font-light flex`}
               >
                 Produk
+              </li>
+            </Link>
+            <Link
+              to="/loginPage"
+              onClick={() => authService.logOut()}
+              className={`${
+                !isOpen ? "flex justify-start gap-4" : "flex  justify-center"
+              } hover:bg-[#331FA8] items-center px-3 py-1 rounded-md`}
+            >
+              <FiLogOut className="text-white text-3xl" />
+              <li
+                className={`${
+                  isOpen && "scale-0 h-0 w-0"
+                } duration-500 text-white font-win text-sm font-light flex`}
+              >
+                Log Out
               </li>
             </Link>
           </ul>
