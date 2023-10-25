@@ -48,9 +48,9 @@ export default function ProductPage() {
           </Link>
         </div>
         <div className="overflow-x-scroll pt-5  w-full">
-          <table className="w-full mt-5 overflow-x-scroll">
+          <table className="w-full mt-5 rounded-md">
             <thead className="bg-[#6F6A6A]/10">
-              <tr className="">
+              <tr className="rounded-xl">
                 <th className="font-medium opacity-70 text-sm font-win w-20 px-3 py-3">
                   GAMBAR
                 </th>
@@ -153,7 +153,7 @@ export default function ProductPage() {
           >
             <div className=" z-10 top-0 h-full flex justify-center items-center fixed ">
               <div className=" flex items-start justify-center duration-500">
-                <ModalDetailProduct/>
+                <ModalDetailProduct />
                 <FiX
                   onClick={() => setIsModal(!isModal)}
                   className="text-3xl text-white"
