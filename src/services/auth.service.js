@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import { signOut } from "firebase/auth";
-import {auth} from "../configs/firebase"
+import {auth} from "../configs/firebase";
+
 
 export class AuthService {
     
@@ -29,12 +30,14 @@ export class AuthService {
     Cookies.remove("idToken");
     Cookies.remove("refreshToken");
   }
-
+  navigate (){
+    useNavigation();
+  }
   async logOut() {
     try {
       await signOut(auth);
       this.clearCredentialsFromCookie();
-      window.location.href = "/loginPage";
+      window.location.href = "/";
     } catch (err) {
       console.error(err);
     }
