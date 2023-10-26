@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SideBar from "../components/sideBar";
 import { FiHome, FiCamera } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { APIProduct } from "../configs/apis/productAPI";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../configs/firebase";
@@ -17,8 +17,7 @@ export default function AddProductPage() {
   });
 
   const [uploadImage, setUploadImage] = useState(null);
-
-  useEffect(() => {});
+  const navigate = useNavigate();
 
   const handleInputProductName = (e) => {
     const NewProductName = e.target.value;
@@ -67,21 +66,20 @@ export default function AddProductPage() {
     }));
   };
 
- const handleSubmit = async (e) => {
-   e.preventDefault();
-   if (product.image !== null) {
-     const imageRef = ref(storage, `imagesProduct/${uploadImage.name + v4()}`);
-     const uploadTask = uploadBytes(imageRef, uploadImage);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (product.image !== null) {
+      const imageRef = ref(storage, `imagesProduct/${uploadImage.name + v4()}`);
+      const uploadTask = uploadBytes(imageRef, uploadImage);
 
-     await uploadTask;
+      await uploadTask;
 
-     const downloadURL = await getDownloadURL(imageRef);
+      const downloadURL = await getDownloadURL(imageRef);
 
-
-     const productWithDownloadURL = {
-       ...product,
-       image: downloadURL, 
-     };
+      const productWithDownloadURL = {
+        ...product,
+        image: downloadURL,
+      };
       try {
         await APIProduct.addProduct(productWithDownloadURL);
         alert("add product successful");
@@ -93,12 +91,12 @@ export default function AddProductPage() {
           price: "",
           description: "",
         }));
+        navigate("/productPage");
       } catch (error) {
-        alert("something went wrong");
+        alert("ada Kesalahan Saat Menambah Data");
       }
-    
-   } else {
-     alert("gambar Harus Ada");
+    } else {
+      alert("gambar Harus Ada");
       setProduct((prevData) => ({
         ...prevData,
         productName: "",
@@ -107,13 +105,12 @@ export default function AddProductPage() {
         price: "",
         description: "",
       }));
-   }
-
- };
+    }
+  };
   return (
-    <div className="flex h-full">
+    <div className="flex h-full overflow-y-hidden flex-grow">
       <SideBar />
-      <div className="h-screen sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative">
+      <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative">
         <div className="pt-5">
           <div className="bg-[#D9D9D9] w-9 h-6 rounded-md flex items-center justify-center">
             <FiHome className="text-[#715DEA]" />
@@ -138,16 +135,6 @@ export default function AddProductPage() {
                 type="file"
                 accept="image/*"
                 className="input-field hidden"
-                // onChange={({ target: { files } }) => {
-                //   files[0] && setFileName(files[0].name);
-                //   if (files) {
-                //     // setImage(URL.createObjectURL(files[0]));
-                //     setProduct((prevProduct) => ({
-                //       ...prevProduct,
-                //       image: URL.createObjectURL(files[0]),
-                //     }));
-                //   }
-                // }}
                 onChange={handleInputImage}
               />
               {product.image ? (
@@ -159,10 +146,6 @@ export default function AddProductPage() {
               ) : (
                 <FiCamera className="text-2xl " />
               )}
-              {/* <div> 
-                <p className="text-red-600 text-[10px] font-win font-bold">
-                email atau password salah !!!
-              </p></div> */}
             </div>
           </div>
           <div className="flex gap-2 flex-wrap sm:flex-nowrap">

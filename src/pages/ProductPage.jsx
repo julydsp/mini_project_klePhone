@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SideBar from "../components/sideBar";
 import {
   FiHome,
@@ -9,17 +9,22 @@ import {
   FiTrash,
   FiX,
 } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalDetailProduct from "../components/modalDetailProduct";
+import { APIProduct } from "../configs/apis/productAPI";
 
 export default function ProductPage() {
   const [isModal, setIsModal] = useState(false);
+  const [product, setProduct] = useState([]);
+  const navigate = useNavigate();
 
-  console.log("nilai", isModal);
+  useEffect(() => {
+    APIProduct.getProducts().then(setProduct);
+  }, []);
   return (
     <div className="flex">
       <SideBar />
-      <div className="h-screen sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative">
+      <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative">
         <div className="pt-5">
           <div className="bg-[#D9D9D9] w-9 h-6 rounded-md flex items-center justify-center">
             <FiHome className="text-[#715DEA]" />
@@ -69,80 +74,52 @@ export default function ProductPage() {
               </tr>
             </thead>
             <tbody className="rounded-b-lg ">
-              <tr className="h-20  border-x-[1px]   border-b-[1px] rounded-b-xl ">
-                <td className="text-center text-md font-win font-medium">
-                  image
-                </td>
-                <td className="text-center text-md font-win font-medium">
-                  iphone xs
-                </td>
-                <td className="text-center text-md font-win font-medium">
-                  4.000.000
-                </td>
-                <td className="text-center text-md font-win font-medium">
-                  IOS
-                </td>
-                <td className="text-center text-md font-win font-medium">
-                  <ul className="flex justify-around items-center">
-                    <Link
-                      to="/editProductPage"
-                      className="px-3 py-3 border border-black rounded-full border-solid"
-                    >
-                      <FiEdit2 className="text-xl" />
-                    </Link>
-                    <div
-                      onClick={() => setIsModal(!isModal)}
-                      className="px-3 py-3 border border-black cursor-pointer rounded-full border-solid"
-                    >
-                      <FiEye className="text-xl" />
-                    </div>
-                    <a
-                      href=""
-                      className="px-3 py-3 border border-black  rounded-full border-solid"
-                    >
-                      <FiTrash className="text-xl" />
-                    </a>
-                  </ul>
-                </td>
-              </tr>
-              <tr className="h-20  border-x-[1px]   border-b-[1px] rounded-b-xl ">
-                <td className="text-center text-md font-win font-medium">
-                  image
-                </td>
-                <td className="text-center text-md font-win font-medium">
-                  iphone xs
-                </td>
-                <td className="text-center text-md font-win font-medium">
-                  4.000.000
-                </td>
-                <td className="text-center text-md font-win font-medium">
-                  IOS
-                </td>
-                <td className="text-center text-md font-win font-medium">
-                  <ul className="flex justify-around items-center">
-                    <Link
-                      to="/editProductPage"
-                      className="px-3 py-3 border border-black rounded-full border-solid"
-                    >
-                      <FiEdit2 className="text-xl" />
-                    </Link>
-                    <div>
-                      <div
-                        onClick={() => setIsModal(!isModal)}
-                        className="px-3 py-3 border border-black cursor-pointer rounded-full border-solid"
-                      >
-                        <FiEye className="text-xl" />
-                      </div>
-                    </div>
-                    <a
-                      href=""
-                      className="px-3 py-3 border border-black  rounded-full border-solid"
-                    >
-                      <FiTrash className="text-xl" />
-                    </a>
-                  </ul>
-                </td>
-              </tr>
+              {product &&
+                product.map((product) => (
+                  <tr
+                    key={product.id}
+                    className="h-20  border-x-[1px]   border-b-[1px] rounded-b-xl "
+                  >
+                    <td className="text-center text-md font-win font-medium">
+                      <img src={product.image} alt="" />
+                    </td>
+                    <td className="text-center text-md font-win font-medium">
+                      {product.productName}
+                    </td>
+                    <td className="text-center text-md font-win font-medium">
+                      {product.price}
+                    </td>
+                    <td className="text-center text-md font-win font-medium">
+                      {product.category}
+                    </td>
+                    <td className="text-center text-md font-win font-medium">
+                      <ul className="flex justify-around items-center">
+                        <Link
+                          to="/editProductPage"
+                          className="px-3 py-3 border border-black rounded-full border-solid"
+                        >
+                          <FiEdit2 className="text-xl" />
+                        </Link>
+                        <div
+                          onClick={() => setIsModal(!isModal)}
+                          className="px-3 py-3 border border-black cursor-pointer rounded-full border-solid"
+                        >
+                          <FiEye className="text-xl" />
+                        </div>
+                        <a
+                          onClick={() =>
+                            APIProduct.deleteProduct(product.id).then(() =>
+                              navigate(0)
+                            )
+                          }
+                          className="px-3 py-3 border border-black  rounded-full border-solid"
+                        >
+                          <FiTrash className="text-xl" />
+                        </a>
+                      </ul>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
