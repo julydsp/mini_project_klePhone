@@ -9,9 +9,7 @@ export const APIAuth = {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const { idToken, refreshToken } = result._tokenResponse;
       authService.storeCredentialsToCookie({ idToken, refreshToken });
-      console.log(result);
     } catch (err) {
-      console.error(err);
       throw new Error(err);
     }
   },

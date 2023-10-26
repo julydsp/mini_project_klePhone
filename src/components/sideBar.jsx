@@ -75,7 +75,6 @@ export default function SideBar() {
               </li>
             </Link>
             <Link
-              to="/loginPage"
               onClick={() => authService.logOut()}
               className={`${
                 !isOpen ? "flex justify-start gap-4" : "flex  justify-center"
