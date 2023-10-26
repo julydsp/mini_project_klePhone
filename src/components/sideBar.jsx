@@ -16,7 +16,7 @@ export default function SideBar() {
       <div
         className={` ${
           !isOpen ? "w-64 lg:w-72 md:z-0 md:relative" : "w-22 relative"
-        } duration-500 h-screen bg-[#715EEA] px-4 absolute z-40 pt-7`}
+        } duration-500  bg-[#715EEA] px-4 absolute z-40 pt-7`}
       >
         <div className="bg-[#331FA8] w-9 h-9 z-50 -right-[17px] cursor-pointer top-7 flex justify-center items-center rounded-md absolute">
           <FiMenu

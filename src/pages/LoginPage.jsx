@@ -10,21 +10,16 @@ export const LoginPage = () => {
   });
   const [errorMesage, setErrorMessage] = useState(false);
 
-  const [loginError, setLoginError] = useState("");
-
   const handleChangeEmail = (event) => {
     setUser({ ...user, email: event.target.value });
-    setLoginError("");
   };
 
   const handleChangePassword = (event) => {
     setUser({ ...user, password: event.target.value });
-    setLoginError("");
   };
 
   const signIn = async (event) => {
     event.preventDefault();
-    console.log("setelah diklik sign in", user);
     try {
       await APIAuth.signInWithCredentials({
         email: user.email,
