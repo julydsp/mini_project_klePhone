@@ -3,9 +3,9 @@ import { FiHome } from "react-icons/fi";
 
 export default function HomePage() {
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-y-hidden flex-grow">
       <SideBar />
-      <div className="h-screen max-w-screen-sm p-7 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl relative">
+      <div className="h-full max-w-screen-sm p-7 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl relative">
         <div className="pt-5">
           <div className="bg-[#D9D9D9] w-9 h-6 rounded-md flex items-center justify-center">
             <FiHome className="text-[#715DEA]" />

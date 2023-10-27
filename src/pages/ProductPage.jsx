@@ -16,15 +16,21 @@ import { APIProduct } from "../configs/apis/productAPI";
 export default function ProductPage() {
   const [isModal, setIsModal] = useState(false);
   const [product, setProduct] = useState([]);
+  const [selectProduct, setSelectProduct] = useState(null)
   const navigate = useNavigate();
+
+  const handleDetailClick = (product) => {
+    setSelectProduct(product);
+    setIsModal(true);
+  }
 
   useEffect(() => {
     APIProduct.getProducts().then(setProduct);
   }, []);
   return (
-    <div className="flex">
+    <div className="flex h-full overflow-y-hidden flex-grow">
       <SideBar />
-      <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative">
+      <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-full relative">
         <div className="pt-5">
           <div className="bg-[#D9D9D9] w-9 h-6 rounded-md flex items-center justify-center">
             <FiHome className="text-[#715DEA]" />
@@ -101,7 +107,7 @@ export default function ProductPage() {
                           <FiEdit2 className="text-xl" />
                         </Link>
                         <div
-                          onClick={() => setIsModal(!isModal)}
+                          onClick={() => handleDetailClick(product)}
                           className="px-3 py-3 border border-black cursor-pointer rounded-full border-solid"
                         >
                           <FiEye className="text-xl" />
@@ -130,7 +136,7 @@ export default function ProductPage() {
           >
             <div className=" z-10 top-0 h-full flex justify-center items-center fixed ">
               <div className=" flex items-start justify-center duration-500">
-                <ModalDetailProduct />
+                <ModalDetailProduct product={selectProduct} />
                 <FiX
                   onClick={() => setIsModal(!isModal)}
                   className="text-3xl text-white"

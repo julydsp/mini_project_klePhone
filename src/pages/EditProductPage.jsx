@@ -7,9 +7,9 @@ export default function EditProductPage() {
   const [image, setImage] = useState(null);
   const [fileName, setFileName] = useState("No selected file");
   return (
-    <div className="flex h-full">
+    <div className="flex h-full overflow-y-hidden flex-grow">
       <SideBar />
-      <div className="h-screen sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative">
+      <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative">
         <div className="pt-5">
           <div className="bg-[#D9D9D9] w-9 h-6 rounded-md flex items-center justify-center">
             <FiHome className="text-[#715DEA]" />
