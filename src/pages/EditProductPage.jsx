@@ -130,18 +130,10 @@ export default function EditProductPage() {
         } catch (error) {
           alert("Ada kesalahan saat mengupdate produk");
         }
+      } else {
+        alert("Gambar harus diganti");
       }
-    } else {
-      alert("Gambar harus ada");
-      setProduct((prevData) => ({
-        ...prevData,
-        productName: "",
-        image: null,
-        category: "",
-        price: "",
-        description: "",
-      }));
-    }
+      }
   };
   return (
     <div className="flex h-full overflow-y-hidden flex-grow">
