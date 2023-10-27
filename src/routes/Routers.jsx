@@ -16,7 +16,7 @@ export default function Routers() {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/productPage" element={<ProductPage />}></Route>
         <Route path="/addproductPage" element={<AddProductPage />}></Route>
-        <Route path="/editProductPage" element={<EditProductPage />}></Route>
+        <Route path="/editProductPage/:id" element={<EditProductPage />}></Route>
       </Route>
       <Route path="/" element={<ProtectedRoute />}>
         <Route path="/loginPage" element={<LoginPage />} />
