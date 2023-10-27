@@ -19,6 +19,21 @@ export default function ProductPage() {
   const [selectProduct, setSelectProduct] = useState(null)
   const navigate = useNavigate();
 
+  const [searchField, setSearchField] = useState("");
+
+   const filteredProduct = product.filter((product) => {
+     return (
+       product.productName.toLowerCase().includes(searchField.toLowerCase()) ||
+       product.price.toLowerCase().includes(searchField.toLowerCase()) ||
+       product.category.toLowerCase().includes(searchField.toLowerCase()) 
+     );
+   });
+
+   const handleChangeSearch = (e) => {
+     setSearchField(e.target.value);
+   };
+
+
   const handleDetailClick = (product) => {
     setSelectProduct(product);
     setIsModal(true);
@@ -47,6 +62,8 @@ export default function ProductPage() {
               type="text"
               className="outline-none"
               placeholder="Search..."
+              value={searchField}
+              onChange={handleChangeSearch}
             />
           </div>
 
@@ -80,8 +97,8 @@ export default function ProductPage() {
               </tr>
             </thead>
             <tbody className="rounded-b-lg ">
-              {product &&
-                product.map((product) => (
+              {filteredProduct &&
+                filteredProduct.map((product) => (
                   <tr
                     key={product.id}
                     className="h-20  border-x-[1px]   border-b-[1px] rounded-b-xl "
@@ -101,7 +118,7 @@ export default function ProductPage() {
                     <td className="text-center text-md font-win font-medium">
                       <ul className="flex justify-around items-center">
                         <Link
-                          to="/editProductPage"
+                          to={`/editProductPage/${product.id}`}
                           className="px-3 py-3 border border-black rounded-full border-solid"
                         >
                           <FiEdit2 className="text-xl" />
@@ -129,23 +146,23 @@ export default function ProductPage() {
             </tbody>
           </table>
         </div>
-        {isModal && (
-          <div
-            onClick={() => setIsModal(!isModal)}
-            className="z-10 w-full flex justify-center items-center top-0 left-0 h-full absolute bg-gray-600/80 "
-          >
-            <div className=" z-10 top-0 h-full flex justify-center items-center fixed ">
-              <div className=" flex items-start justify-center duration-500">
-                <ModalDetailProduct product={selectProduct} />
-                <FiX
-                  onClick={() => setIsModal(!isModal)}
-                  className="text-3xl text-white"
-                />
-              </div>
-            </div>
-          </div>
-        )}
       </div>
+      {isModal && (
+         <div
+           onClick={() => setIsModal(!isModal)}
+           className="z-10 w-full left-0 flex justify-center items-center top-0   h-full absolute bg-gray-600/80 "
+         >
+           <div className=" z-10 top-0 flex justify-center items-center fixed h-full">
+             <div className=" flex items-start justify-center duration-500">
+               <ModalDetailProduct product={selectProduct} />
+               <FiX
+                 onClick={() => setIsModal(!isModal)}
+                 className="text-3xl text-white"
+               />
+             </div>
+           </div>
+         </div>
+       )}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "../../../configs/firebase";
 
@@ -29,6 +30,18 @@ export const APIProduct = {
       throw new Error(e);
     }
   },
+
+
+  updateProduct: async (id, updatedProduct) => {
+    try {
+      const productRef = doc(db, "product", id);
+      await setDoc(productRef, updatedProduct, { merge: true });
+      return "Product updated successfully";
+    } catch (e) {
+      throw new Error(e);
+    }
+  },
+
 
   deleteProduct: async (id) => {
     try {

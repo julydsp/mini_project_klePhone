@@ -1,11 +1,148 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "../components/sideBar";
 import { FiHome, FiCamera } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db, storage } from "../configs/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
+import { APIProduct } from "../configs/apis/productAPI";
 
 export default function EditProductPage() {
-  const [image, setImage] = useState(null);
-  const [fileName, setFileName] = useState("No selected file");
+  const [product, setProduct] = useState({
+    productName: "",
+    image: null,
+    price: "",
+    category: "",
+    description: "",
+  });
+  const [uploadImage, setUploadImage] = useState(null);
+
+  const { id } = useParams();
+  useEffect(() => {
+    const getProductData = async () => {
+      try {
+        const productDoc = await getDoc(doc(db, "product", id));
+        if (productDoc.exists()) {
+          const productData = productDoc.data();
+          setProduct({
+            productName: productData.productName || "",
+            image: productData.image || null,
+            price: productData.price || "",
+            category: productData.category || "",
+            description: productData.description || "",
+          });
+          setUploadImage(productData.image);
+        }
+      } catch (error) {
+        console.error("Error reading product data: ", error);
+      }
+    };
+
+    getProductData();
+  }, [id]);
+
+  const navigate = useNavigate();
+
+  const handleInputProductName = (e) => {
+    const NewProductName = e.target.value;
+    setProduct((prevData) => ({
+      ...prevData,
+      productName: NewProductName,
+    }));
+  };
+
+  const handleInputImage = (e) => {
+    const newOnImageChange = e.target.files[0];
+    setProduct((prevData) => ({
+      ...prevData,
+      image: URL.createObjectURL(newOnImageChange),
+    }));
+    setUploadImage(newOnImageChange);
+  };
+
+  const handleInputPrice = (e) => {
+    const newPrice = e.target.value;
+    setProduct((prevData) => ({
+      ...prevData,
+      price: newPrice,
+    }));
+  };
+
+  const optionsCategory = [
+    { value: "", label: "Choose..." },
+    { value: "1", label: "IOS" },
+    { value: "2", label: "ANDROID" },
+  ];
+
+  const handleInputCategory = (e) => {
+    const newInputCategory = e.target.value;
+    setProduct((prevData) => ({
+      ...prevData,
+      category: newInputCategory,
+    }));
+  };
+
+  const handleInputDescription = (e) => {
+    const newDescription = e.target.value;
+    setProduct((prevData) => ({
+      ...prevData,
+      description: newDescription,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let imageChanged = false;
+
+    if (product.image !== null) {
+      if (product.image !== uploadImage) {
+        imageChanged = true;
+      }
+
+      if (imageChanged) {
+        const imageRef = ref(
+          storage,
+          `imagesProduct/${uploadImage.name + v4()}`
+        );
+        const uploadTask = uploadBytes(imageRef, uploadImage);
+
+        await uploadTask;
+
+        const downloadURL = await getDownloadURL(imageRef);
+        const productWithDownloadURL = {
+          ...product,
+          image: downloadURL,
+        };
+
+        try {
+          await APIProduct.updateProduct(id, productWithDownloadURL);
+          alert("Produk berhasil diperbarui");
+          setProduct((prevData) => ({
+            ...prevData,
+            productName: "",
+            image: null,
+            category: "",
+            price: "",
+            description: "",
+          }));
+          navigate("/productPage");
+        } catch (error) {
+          alert("Ada kesalahan saat mengupdate produk");
+        }
+      }
+    } else {
+      alert("Gambar harus ada");
+      setProduct((prevData) => ({
+        ...prevData,
+        productName: "",
+        image: null,
+        category: "",
+        price: "",
+        description: "",
+      }));
+    }
+  };
   return (
     <div className="flex h-full overflow-y-hidden flex-grow">
       <SideBar />
@@ -20,11 +157,11 @@ export default function EditProductPage() {
             Edit Produk
           </h1>
           <p className="text-[12px] font-win font-light ">
-            Edit Produk Anda Disini
+            Ubah Produk Anda Disini
           </p>
         </div>
 
-        <form className="flex flex-col gap-3" action="">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3" action="">
           <div className="pt-2">
             <div
               className="w-full border-[1px] min-h-[100px] sm:min-h-[150px] md:min-h-[150px] rounded-md flex justify-center items-center"
@@ -34,18 +171,13 @@ export default function EditProductPage() {
                 type="file"
                 accept="image/*"
                 className="input-field hidden"
-                onChange={({ target: { files } }) => {
-                  files[0] && setFileName(files[0].name);
-                  if (files) {
-                    setImage(URL.createObjectURL(files[0]));
-                  }
-                }}
+                onChange={handleInputImage}
               />
-              {image ? (
+              {product.image ? (
                 <img
-                  src={image}
+                  src={product.image}
                   className="w-full h-auto md:h-[250px] sm:h-[200px] lg:h-[200px] "
-                  alt={fileName}
+                  alt=""
                 />
               ) : (
                 <FiCamera className="text-2xl " />
@@ -61,6 +193,8 @@ export default function EditProductPage() {
                 className="border-[1px] rounded-md px-2 py-2 outline-none"
                 placeholder="Masukkan Nama Produk"
                 type="text"
+                value={product.productName}
+                onChange={handleInputProductName}
               />
             </div>
             <div className="flex gap-2 flex-col w-full sm:w-[50%]">
@@ -71,9 +205,12 @@ export default function EditProductPage() {
                 className="border-[1px] rounded-md px-2 py-2 outline-none"
                 placeholder="Masukkan Harga Produk"
                 type="number"
+                value={product.price}
+                onChange={handleInputPrice}
               />
             </div>
           </div>
+
           <div className="flex gap-2 flex-col ">
             <label htmlFor="" className="font-win text-sm font-light">
               Category
@@ -82,15 +219,23 @@ export default function EditProductPage() {
               name=""
               id=""
               className="px-2 py-2 rounded-md bg-transparent border-[1px]"
+              onChange={handleInputCategory}
             >
-              <option value="" className="font-win text-sm font-light">
-                IOS
-              </option>
-              <option value="" className="font-win text-sm font-light">
-                ANDROID
-              </option>
+              {optionsCategory.map((option) => {
+                return (
+                  <option
+                    key={option.value}
+                    className="font-win text-sm font-light"
+                    value={option.label}
+                  >
+                    {option.label}
+                  </option>
+                );
+              })}
+              ;
             </select>
           </div>
+
           <div className="flex flex-col gap-2">
             <label htmlFor="" className="font-win text-sm font-light">
               Deskripsi
@@ -101,23 +246,25 @@ export default function EditProductPage() {
               id=""
               cols="30"
               rows="10"
+              value={product.description}
+              onChange={handleInputDescription}
             ></textarea>
           </div>
+          <div className="flex gap-4 pt-5">
+            <button
+              type="submit"
+              className="bg-[#331FA8] px-2 py-2 w-24 mb-4 rounded-md text-white font-win font-light"
+            >
+              Kirim
+            </button>
+            <Link
+              to="/productPage"
+              className="bg-[#331FA8] px-2 py-2 w-24 mb-4 rounded-md text-center text-white font-win font-light"
+            >
+              Kembali
+            </Link>
+          </div>
         </form>
-        <div className="flex gap-4 pt-5">
-          <button
-            type="submit"
-            className="bg-[#331FA8] px-2 py-2 w-24 mb-4 rounded-md text-white font-win font-light"
-          >
-            Kirim
-          </button>
-          <Link
-            to="/productPage"
-            className="bg-[#331FA8] px-2 py-2 w-24 mb-4 rounded-md text-white text-center font-win font-light"
-          >
-            Kembali
-          </Link>
-        </div>
       </div>
     </div>
   );
