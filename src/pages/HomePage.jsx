@@ -1,7 +1,13 @@
 import SideBar from "../components/sideBar";
 import { FiHome } from "react-icons/fi";
+import { APIProduct } from "../configs/apis/productAPI";
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
+  const [product, setProduct] = useState([]);
+  useEffect(() => {
+    APIProduct.sumProducts().then(setProduct);
+  }, []);
   return (
     <div className="flex h-screen overflow-y-hidden flex-grow">
       <SideBar />
@@ -18,12 +24,16 @@ export default function HomePage() {
 
         <div className="flex gap-8 md:flex-nowrap flex-wrap justify-center">
           <div className=" rounded-md w-[448px] h-[188px] px-10 py-5 drop-shadow-lg shadow-xl">
-            <h1 className="font-win text-sm pt-3">Total Produk</h1>
-            <h1 className="font-win font-bold  text-lg pt-14">150</h1>
+            <h1 className="font-win text-sm font-medium pt-3">
+              Total Pendapatan Produk
+            </h1>
+            <h1 className="font-win font-semiBold  text-lg pt-14">
+              Rp. {product}
+            </h1>
           </div>
           <div className=" rounded-md w-[448px] h-[188px] px-10 py-5 drop-shadow-lg shadow-xl">
-            <h1 className="font-win text-sm pt-3">Total Produk</h1>
-            <h1 className="font-win font-bold  text-lg pt-14">150</h1>
+            <h1 className="font-win text-sm font-medium pt-3">Total Produk</h1>
+            <h1 className="font-win font-semiBold  text-lg pt-14">150</h1>
           </div>
         </div>
       </div>

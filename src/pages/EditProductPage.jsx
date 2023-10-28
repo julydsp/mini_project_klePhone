@@ -62,7 +62,7 @@ export default function EditProductPage() {
   };
 
   const handleInputPrice = (e) => {
-    const newPrice = e.target.value;
+    const newPrice = parseInt(e.target.value);
     setProduct((prevData) => ({
       ...prevData,
       price: newPrice,
