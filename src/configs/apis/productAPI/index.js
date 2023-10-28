@@ -4,6 +4,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  query,
   setDoc,
 } from "firebase/firestore";
 import { db } from "../../../configs/firebase";
@@ -31,7 +32,6 @@ export const APIProduct = {
     }
   },
 
-
   updateProduct: async (id, updatedProduct) => {
     try {
       const productRef = doc(db, "product", id);
@@ -42,7 +42,6 @@ export const APIProduct = {
     }
   },
 
-
   deleteProduct: async (id) => {
     try {
       console.log(id);
@@ -52,6 +51,26 @@ export const APIProduct = {
     } catch (e) {
       console.error("Error deleting document: ", e);
       throw new Error(e);
+    }
+  },
+
+  sumProducts: async () => {
+    try {
+      const q = query(collection(db, "product"));
+      const querySnapshot = await getDocs(q);
+
+      let totalSum = 0;
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.price && typeof data.price === "number") {
+          totalSum += data.price;
+        }
+      });
+
+      return totalSum;
+    } catch (error) {
+      throw new Error(error);
     }
   },
 };

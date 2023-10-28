@@ -24,7 +24,6 @@ export default function ProductPage() {
    const filteredProduct = product.filter((product) => {
      return (
        product.productName.toLowerCase().includes(searchField.toLowerCase()) ||
-       product.price.toLowerCase().includes(searchField.toLowerCase()) ||
        product.category.toLowerCase().includes(searchField.toLowerCase()) 
      );
    });

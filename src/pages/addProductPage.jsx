@@ -37,7 +37,7 @@ export default function AddProductPage() {
   };
 
   const handleInputPrice = (e) => {
-    const newPrice = e.target.value;
+    const newPrice = parseInt(e.target.value);
     setProduct((prevData) => ({
       ...prevData,
       price: newPrice,
@@ -67,6 +67,7 @@ export default function AddProductPage() {
   };
 
   const handleSubmit = async (e) => {
+    console.log(product);
     e.preventDefault();
     if (product.image !== null) {
       const imageRef = ref(storage, `imagesProduct/${uploadImage.name + v4()}`);
