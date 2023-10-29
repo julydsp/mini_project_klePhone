@@ -22,7 +22,7 @@ export default function HomePage() {
   return (
     <div className="flex h-[100vh] flex-grow">
       <SideBar />
-      <div className="h-full max-w-screen-sm p-7 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl relative ">
+      <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-full relative overflow-y-scroll">
         <div className="pt-5">
           <div className="bg-[#D9D9D9] w-9 h-6 rounded-md flex items-center justify-center">
             <FiHome className="text-[#715DEA]" />
