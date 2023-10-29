@@ -18,6 +18,10 @@ export default function ModalDetailProduct({product}) {
             <p className="text-[10px] font-win font-light text-white">{product.price}</p>
           </div>
           <div className="flex flex-col gap-3">
+            <h1 className="text-sm font-win text-white">Stok Produk</h1>
+            <p className="text-[10px] font-win font-light text-white">{product.stok}</p>
+          </div>
+          <div className="flex flex-col gap-3">
             <h1 className="text-sm font-win text-white">Deskripsi Produk</h1>
             <p className="text-[10px] font-win font-light text-white">
              {product.description}

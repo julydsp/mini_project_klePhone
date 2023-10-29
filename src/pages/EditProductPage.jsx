@@ -13,6 +13,7 @@ export default function EditProductPage() {
     productName: "",
     image: null,
     price: "",
+    stok : "",
     category: "",
     description: "",
   });
@@ -29,6 +30,7 @@ export default function EditProductPage() {
             productName: productData.productName || "",
             image: productData.image || null,
             price: productData.price || "",
+            stok : productData.stok || "",
             category: productData.category || "",
             description: productData.description || "",
           });
@@ -66,6 +68,14 @@ export default function EditProductPage() {
     setProduct((prevData) => ({
       ...prevData,
       price: newPrice,
+    }));
+  };
+
+  const handleInputStok = (e) => {
+    const newStok = parseInt(e.target.value);
+    setProduct((prevData) => ({
+      ...prevData,
+      stok: newStok,
     }));
   };
 
@@ -124,6 +134,7 @@ export default function EditProductPage() {
             image: null,
             category: "",
             price: "",
+            stok:"",
             description: "",
           }));
           navigate("/productPage");
@@ -201,6 +212,18 @@ export default function EditProductPage() {
                 onChange={handleInputPrice}
               />
             </div>
+            <div className="flex gap-2 flex-col w-full sm:w-[50%]">
+              <label htmlFor="" className="font-win text-sm font-light">
+                Stok
+              </label>
+              <input
+                className="border-[1px] rounded-md px-2 py-2 outline-none"
+                placeholder="Masukkan Stok Produk"
+                type="number"
+                value={product.stok}
+                onChange={handleInputStok}
+              />
+            </div>
           </div>
 
           <div className="flex gap-2 flex-col ">
@@ -219,6 +242,7 @@ export default function EditProductPage() {
                     key={option.value}
                     className="font-win text-sm font-light"
                     value={option.label}
+                    selected={product.category === option.label}
                   >
                     {option.label}
                   </option>

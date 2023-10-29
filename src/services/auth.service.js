@@ -30,9 +30,7 @@ export class AuthService {
     Cookies.remove("idToken");
     Cookies.remove("refreshToken");
   }
-  navigate (){
-    useNavigation();
-  }
+  
   async logOut() {
     try {
       await signOut(auth);

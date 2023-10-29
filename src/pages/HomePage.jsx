@@ -5,9 +5,20 @@ import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const [product, setProduct] = useState([]);
+  const [stokProduct, setStokProduct] = useState([]);
   useEffect(() => {
     APIProduct.sumProducts().then(setProduct);
+    APIProduct.sumStokProducts().then(setStokProduct);
   }, []);
+
+  function formatAsCurrency(number) {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(number);
+  }
+
   return (
     <div className="flex h-screen overflow-y-hidden flex-grow">
       <SideBar />
@@ -23,17 +34,19 @@ export default function HomePage() {
         </p>
 
         <div className="flex gap-8 md:flex-nowrap flex-wrap justify-center">
-          <div className=" rounded-md w-[448px] h-[188px] px-10 py-5 drop-shadow-lg shadow-xl">
+          <div className=" rounded-md w-[448px] h-[188px] px-10 py-5 drop-shadow-lg shadow-xl hover:translate-x-0.5 hover:-translate-y-2.5 hover:shadow-2xl">
             <h1 className="font-win text-sm font-medium pt-3">
               Total Pendapatan Produk
             </h1>
             <h1 className="font-win font-semiBold  text-lg pt-14">
-              Rp. {product}
+              {formatAsCurrency(product)}
             </h1>
           </div>
-          <div className=" rounded-md w-[448px] h-[188px] px-10 py-5 drop-shadow-lg shadow-xl">
-            <h1 className="font-win text-sm font-medium pt-3">Total Produk</h1>
-            <h1 className="font-win font-semiBold  text-lg pt-14">150</h1>
+          <div className=" rounded-md w-[448px] h-[188px] px-10 py-5 drop-shadow-lg shadow-xl hover:translate-x-0.5 hover:-translate-y-2.5 hover:shadow-2xl">
+            <h1 className="font-win text-sm font-medium pt-3">Stok Produk</h1>
+            <h1 className="font-win font-semiBold  text-lg pt-14">
+              {stokProduct}
+            </h1>
           </div>
         </div>
       </div>

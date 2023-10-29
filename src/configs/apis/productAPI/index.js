@@ -64,7 +64,27 @@ export const APIProduct = {
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         if (data.price && typeof data.price === "number") {
-          totalSum += data.price;
+           totalSum += data.price * data.stok;
+        }
+      });
+
+      return totalSum;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  
+  sumStokProducts: async () => {
+    try {
+      const q = query(collection(db, "product"));
+      const querySnapshot = await getDocs(q);
+
+      let totalSum = 0;
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.stok && typeof data.stok === "number") {
+          totalSum += data.stok;
         }
       });
 
