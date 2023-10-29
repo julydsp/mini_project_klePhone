@@ -87,6 +87,9 @@ export default function ProductPage() {
                 <th className="font-medium opacity-70 text-sm font-win w-20 px-3 py-3 ">
                   HARGA
                 </th>
+                <th className="font-medium opacity-70 text-sm font-win w-20 px-3 py-3 ">
+                  STOK
+                </th>
                 <th className="font-medium opacity-70 text-sm font-win px-3 py-3 ">
                   KATEGORI
                 </th>
@@ -110,6 +113,9 @@ export default function ProductPage() {
                     </td>
                     <td className="text-center text-md font-win font-medium">
                       {product.price}
+                    </td>
+                    <td className="text-center text-md font-win font-medium">
+                      {product.stok}
                     </td>
                     <td className="text-center text-md font-win font-medium">
                       {product.category}

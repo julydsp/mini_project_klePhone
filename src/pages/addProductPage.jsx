@@ -14,6 +14,7 @@ export default function AddProductPage() {
     price: "",
     category: "",
     description: "",
+    stok : "",
   });
 
   const [uploadImage, setUploadImage] = useState(null);
@@ -41,6 +42,13 @@ export default function AddProductPage() {
     setProduct((prevData) => ({
       ...prevData,
       price: newPrice,
+    }));
+  };
+  const handleInputStok = (e) => {
+    const newStok = parseInt(e.target.value);
+    setProduct((prevData) => ({
+      ...prevData,
+      stok: newStok,
     }));
   };
 
@@ -90,6 +98,7 @@ export default function AddProductPage() {
           image: null,
           category: "",
           price: "",
+          stok: "",
           description: "",
         }));
         navigate("/productPage");
@@ -104,6 +113,7 @@ export default function AddProductPage() {
         image: null,
         category: "",
         price: "",
+        stok: "",
         description: "",
       }));
     }
@@ -160,6 +170,18 @@ export default function AddProductPage() {
                 type="text"
                 value={product.productName}
                 onChange={handleInputProductName}
+              />
+            </div>
+            <div className="flex gap-2 flex-col w-full sm:w-[50%]">
+              <label htmlFor="" className="font-win text-sm font-light">
+                Stok
+              </label>
+              <input
+                className="border-[1px] rounded-md px-2 py-2 outline-none"
+                placeholder="Masukkan Stok Produk"
+                type="number"
+                value={product.stok}
+                onChange={handleInputStok}
               />
             </div>
             <div className="flex gap-2 flex-col w-full sm:w-[50%]">
