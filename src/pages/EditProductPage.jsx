@@ -147,7 +147,7 @@ export default function EditProductPage() {
       }
   };
   return (
-    <div className="flex h-full overflow-y-hidden flex-grow">
+    <div className="flex h-[100vh] overflow-y-hidden flex-grow">
       <SideBar />
       <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative">
         <div className="pt-5">

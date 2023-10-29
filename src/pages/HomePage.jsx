@@ -20,7 +20,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex h-screen overflow-y-hidden flex-grow">
+    <div className="flex h-[100vh] overflow-y-hidden flex-grow">
       <SideBar />
       <div className="h-full max-w-screen-sm p-7 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl relative">
         <div className="pt-5">

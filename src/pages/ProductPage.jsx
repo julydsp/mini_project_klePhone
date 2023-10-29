@@ -42,7 +42,7 @@ export default function ProductPage() {
     APIProduct.getProducts().then(setProduct);
   }, []);
   return (
-    <div className="flex h-full overflow-y-hidden flex-grow">
+    <div className="flex h-[100vh] overflow-y-hidden flex-grow">
       <SideBar />
       <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-full relative">
         <div className="pt-5">
@@ -137,7 +137,7 @@ export default function ProductPage() {
                         <a
                           onClick={() =>
                             APIProduct.deleteProduct(product.id).then(() =>
-                              navigate(0)
+                              location.reload()
                             )
                           }
                           className="px-3 py-3 border border-black  rounded-full border-solid"
@@ -153,21 +153,21 @@ export default function ProductPage() {
         </div>
       </div>
       {isModal && (
-         <div
-           onClick={() => setIsModal(!isModal)}
-           className="z-10 w-full left-0 flex justify-center items-center top-0 h-full absolute bg-gray-600/80"
-         >
-           <div className=" z-10 top-0 flex justify-center items-center fixed h-full">
-             <div className=" flex items-start justify-center duration-500">
-               <ModalDetailProduct product={selectProduct} />
-               <FiX
-                 onClick={() => setIsModal(!isModal)}
-                 className="text-3xl text-white"
-               />
-             </div>
-           </div>
-         </div>
-       )}
+        <div
+          onClick={() => setIsModal(!isModal)}
+          className="z-10 w-full left-0 flex justify-center items-center top-0 h-full absolute bg-gray-600/80"
+        >
+          <div className=" z-10 top-0 flex justify-center items-center fixed h-full">
+            <div className=" flex items-start justify-center duration-500">
+              <ModalDetailProduct product={selectProduct} />
+              <FiX
+                onClick={() => setIsModal(!isModal)}
+                className="text-3xl text-white"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
