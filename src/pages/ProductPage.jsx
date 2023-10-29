@@ -155,7 +155,7 @@ export default function ProductPage() {
       {isModal && (
         <div
           onClick={() => setIsModal(!isModal)}
-          className="z-10 w-full left-0 flex justify-center items-center top-0 h-full absolute bg-gray-600/80"
+          className="z-10 w-full left-14 flex justify-center items-center top-0 h-[100vh] fixed bg-gray-600/80"
         >
           <div className=" z-10 top-0 flex justify-center items-center fixed h-full">
             <div className=" flex items-start justify-center duration-500">
