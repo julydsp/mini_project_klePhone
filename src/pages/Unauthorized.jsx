@@ -7,7 +7,7 @@ export function Unauthorized() {
     <div className="min-h-screen flex items-center justify-center bg-[#715EEA]">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-semibold font-win text-gray-800 mb-4">
-          Login Dulu Bos !!!
+          Login Dulu Sodara!!!
         </h2>
         <p className="text-gray-600 font-win mb-6">
           kamu tidak ada izin untuk mengakses halaman ini, silahkan Login terlebih dahulu

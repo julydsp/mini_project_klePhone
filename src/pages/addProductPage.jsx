@@ -233,7 +233,7 @@ export default function AddProductPage() {
 
           <div className="flex gap-2 flex-col ">
             <label htmlFor="" className="font-win text-sm font-light">
-              Category
+              kategori
             </label>
             <select
               name=""

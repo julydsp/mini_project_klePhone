@@ -19,7 +19,7 @@ export const APIProduct = {
       }));
       return product;
     } catch (error) {
-      alert("login failed. your email or password is wrong!");
+      throw new Error(e);
     }
   },
 

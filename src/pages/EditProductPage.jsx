@@ -228,7 +228,7 @@ export default function EditProductPage() {
 
           <div className="flex gap-2 flex-col ">
             <label htmlFor="" className="font-win text-sm font-light">
-              Category
+              Kategori
             </label>
             <select
               name=""
@@ -271,7 +271,7 @@ export default function EditProductPage() {
               type="submit"
               className="bg-[#331FA8] px-2 py-2 w-24 mb-4 rounded-md text-white font-win font-light"
             >
-              Kirim
+              Ubah
             </button>
             <Link
               to="/productPage"
