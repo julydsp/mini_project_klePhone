@@ -1,6 +1,8 @@
+/*eslint-disable no_undef*/
 import { OpenAI } from "openai";
 
 export const openai = new OpenAI({
-  apiKey: "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",
+  apiKey: process.env.VITE_API_OPENAI_KEY,
   dangerouslyAllowBrowser: true,
 });
+
