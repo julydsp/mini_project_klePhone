@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "../components/sideBar";
 import { FiHome, FiCamera } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { APIProduct } from "../configs/apis/productAPI";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../configs/firebase";
 import { v4 } from "uuid";
+import { openai } from "../openAI";
 
 export default function AddProductPage() {
   const [product, setProduct] = useState({
@@ -16,6 +17,38 @@ export default function AddProductPage() {
     description: "",
     stok : "",
   });
+
+    useEffect(() => {
+       const delayedFunction = async () => {
+         if (product.productName) {
+           generateProductDescription(product.productName);
+         }
+       };
+       const delayInMilliseconds = 5000; 
+       const delayTimer = setTimeout(delayedFunction, delayInMilliseconds);
+
+       return () => {
+         clearTimeout(delayTimer);
+       };
+    }, [product.productName]);
+
+    const generateProductDescription = async (productName) => { 
+      try {
+        const response = await openai.completions.create({
+          model: "text-davinci-003",
+          prompt: `buatkan deskripsi singkat mengenai handphone ${productName} kurang lebih 100 karakter`,
+          max_tokens: 150,
+        });
+
+        setProduct((prevData) => ({
+          ...prevData,
+          description: response.choices[0]?.text,
+        }));
+      } catch (error) {
+        console.error("Error generating product description:", error);
+      }
+    };
+
 
   const [uploadImage, setUploadImage] = useState(null);
   const navigate = useNavigate();
@@ -75,7 +108,6 @@ export default function AddProductPage() {
   };
 
   const handleSubmit = async (e) => {
-    console.log(product);
     e.preventDefault();
     if (product.image !== null) {
       const imageRef = ref(storage, `imagesProduct/${uploadImage.name + v4()}`);
