@@ -16,8 +16,7 @@ import { APIProduct } from "../configs/apis/productAPI";
 export default function ProductPage() {
   const [isModal, setIsModal] = useState(false);
   const [product, setProduct] = useState([]);
-  const [selectProduct, setSelectProduct] = useState(null)
-  const navigate = useNavigate();
+  const [selectProduct, setSelectProduct] = useState(null);
 
   const [searchField, setSearchField] = useState("");
 
@@ -65,7 +64,7 @@ export default function ProductPage() {
               onChange={handleChangeSearch}
             />
           </div>
-
+          
           <Link
             to="/addProductPage"
             className="text-white flex justify-center items-center font-win text-sm bg-[#331FA8] px-14 py-3 gap-2 rounded-md"
