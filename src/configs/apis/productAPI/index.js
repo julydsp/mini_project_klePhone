@@ -49,7 +49,6 @@ export const APIProduct = {
       await deleteDoc(productRef);
       return;
     } catch (e) {
-      console.error("Error deleting document: ", e);
       throw new Error(e);
     }
   },
