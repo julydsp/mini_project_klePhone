@@ -2,6 +2,7 @@ import SideBar from "../components/sideBar";
 import { FiHome } from "react-icons/fi";
 import { APIProduct } from "../configs/apis/productAPI";
 import { useEffect, useState } from "react";
+import CountUp from "react-countup";
 
 export default function HomePage() {
   const [product, setProduct] = useState([]);
@@ -11,13 +12,6 @@ export default function HomePage() {
     APIProduct.sumStokProducts().then(setStokProduct);
   }, []);
 
-  function formatAsCurrency(number) {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(number);
-  }
 
   return (
     <div className="flex h-[100vh] flex-grow">
@@ -39,13 +33,13 @@ export default function HomePage() {
               Total Pendapatan Produk
             </h1>
             <h1 className="font-win font-semiBold  text-lg pt-14">
-              {formatAsCurrency(product)}
+           Rp. <CountUp start={0} end={product} duration={2} delay={0}/>
             </h1>
           </div>
           <div className=" rounded-md w-[448px] h-[188px] px-10 py-5 drop-shadow-lg shadow-xl hover:translate-x-0.5 hover:-translate-y-2.5 hover:shadow-2xl">
             <h1 className="font-win text-sm font-medium pt-3">Stok Produk</h1>
             <h1 className="font-win font-semiBold  text-lg pt-14">
-              {stokProduct}
+              <CountUp start={0} end={stokProduct} duration={2} delay={0}/>
             </h1>
           </div>
         </div>
