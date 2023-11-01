@@ -7,6 +7,7 @@ import { db, storage } from "../configs/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import { APIProduct } from "../configs/apis/productAPI";
+import Swal from "sweetalert2";
 
 export default function EditProductPage() {
   const [product, setProduct] = useState({
@@ -37,7 +38,7 @@ export default function EditProductPage() {
           setUploadImage(productData.image);
         }
       } catch (error) {
-        console.error("Error reading product data: ", error);
+        console.error("Error reading product data");
       }
     };
 
@@ -127,7 +128,11 @@ export default function EditProductPage() {
 
         try {
           await APIProduct.updateProduct(id, productWithDownloadURL);
-          alert("Produk berhasil diperbarui");
+           await Swal.fire({
+             icon: "success",
+             title: "edit product successful",
+             text: "Produk berhasil diperbarui!",
+           });
           setProduct((prevData) => ({
             ...prevData,
             productName: "",
@@ -142,7 +147,11 @@ export default function EditProductPage() {
           alert("Ada kesalahan saat mengupdate produk");
         }
       } else {
-        alert("Gambar harus diganti");
+        await Swal.fire({
+          icon: "warning",
+          title: "edit product gagal",
+          text: "gambar harus diperbarui!",
+        });
       }
       }
   };
@@ -150,10 +159,11 @@ export default function EditProductPage() {
     <div className="flex h-[100vh] flex-grow">
       <SideBar />
       <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative overflow-y-scroll">
-        <div className="pt-5">
+        <div className="pt-5 flex gap-2">
           <div className="bg-[#D9D9D9] w-9 h-6 rounded-md flex items-center justify-center">
             <FiHome className="text-[#715DEA]" />
           </div>
+          <p className="font-win text-sm">/editProductPage</p>
         </div>
         <div className="flex flex-col gap-2 items-center">
           <h1 className="text-2xl font-win relative pt-2 sm:pt-3 md:pt-3 ">
@@ -241,7 +251,7 @@ export default function EditProductPage() {
                   <option
                     key={option.value}
                     className="font-win text-sm font-light"
-                    value={option.label}
+                    Value={option.label}
                     selected={product.category === option.label}
                   >
                     {option.label}

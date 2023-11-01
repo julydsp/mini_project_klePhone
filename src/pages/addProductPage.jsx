@@ -7,6 +7,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../configs/firebase";
 import { v4 } from "uuid";
 import { openai } from "../openAI";
+import Swal from "sweetalert2";
 
 export default function AddProductPage() {
   const [product, setProduct] = useState({
@@ -17,6 +18,7 @@ export default function AddProductPage() {
     description: "",
     stok : "",
   });
+  const pageUrl = window.location.pathname;
 
     useEffect(() => {
        const delayedFunction = async () => {
@@ -123,7 +125,11 @@ export default function AddProductPage() {
       };
       try {
         await APIProduct.addProduct(productWithDownloadURL);
-        alert("add product successful");
+        await Swal.fire({
+          icon: "success",
+          title: "add product successful",
+          text: "Anda berhasil menambahkan produk!",
+        });
         setProduct((prevData) => ({
           ...prevData,
           productName: "",
@@ -154,11 +160,11 @@ export default function AddProductPage() {
     <div className="flex h-[100vh] flex-grow">
       <SideBar />
       <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-screen relative overflow-y-scroll">
-        <div className="pt-5">
+        <div className="pt-5 flex gap-2">
           <div className="bg-[#D9D9D9] w-9 h-6 rounded-md flex items-center justify-center">
-            <FiHome className="text-[#715DEA]">/ Tambah Produk</FiHome>
-            
+            <FiHome className="text-[#715DEA]"></FiHome>
           </div>
+          <p className="font-win text-sm">{pageUrl}</p>
         </div>
         <div className="flex flex-col gap-2 items-center">
           <h1 className="text-2xl font-win relative pt-2 sm:pt-3 md:pt-3 ">
