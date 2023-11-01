@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SideBar from "../components/sideBar";
 import {
   FiHome,
@@ -12,12 +12,13 @@ import {
 import { useEffect, useState } from "react";
 import ModalDetailProduct from "../components/modalDetailProduct";
 import { APIProduct } from "../configs/apis/productAPI";
+import Swal from "sweetalert2";
 
 export default function ProductPage() {
   const [isModal, setIsModal] = useState(false);
   const [product, setProduct] = useState([]);
   const [selectProduct, setSelectProduct] = useState(null);
-
+  const pageUrl = window.location.pathname;
   const [searchField, setSearchField] = useState("");
 
    const filteredProduct = product.filter((product) => {
@@ -31,6 +32,19 @@ export default function ProductPage() {
      setSearchField(e.target.value);
    };
 
+   const  handleDelete = async (id) => {
+      try {
+        await APIProduct.deleteProduct(id);
+        await Swal.fire({
+          icon: "success",
+          title: "delete product successful",
+          text: "Anda berhasil menghapus produk!",
+        });
+        location.reload();
+      } catch (error) {
+        alert("ada Kesalahan Saat mendelete Data");
+      }
+   }
 
   const handleDetailClick = (product) => {
     setSelectProduct(product);
@@ -44,17 +58,18 @@ export default function ProductPage() {
     <div className="flex h-[100vh] flex-grow">
       <SideBar />
       <div className="sm:w-screen sm:px-10 sm:py-5 md:w-screen md:px-10 md:py-5 px-5 py-5 w-full relative overflow-y-scroll">
-        <div className="pt-5">
+        <div className="pt-5 flex gap-2">
           <div className="bg-[#D9D9D9] w-9 h-6 rounded-md flex items-center justify-center">
             <FiHome className="text-[#715DEA]" />
           </div>
+          <p className="font-win text-sm ">{pageUrl}</p>
         </div>
         <h1 className="text-xl font-win relative pt-7 ">Produk</h1>
         <p className="text-[12px] font-win font-light ">
           Keseluruhan Data Produk
         </p>
-        <div className="flex  flex-wrap gap-2 justify-between pt-10 w-full">
-          <div className="flex border items-center rounded-md gap-3 px-3 py-3">
+        <div className="flex  flex-wrap gap-3 justify-between pt-3 w-full">
+          <div className="flex border items-center rounded-md gap-3 px-3 py-3 w-full sm:w-64 md:w-64">
             <FiSearch />
             <input
               type="text"
@@ -64,17 +79,17 @@ export default function ProductPage() {
               onChange={handleChangeSearch}
             />
           </div>
-          
+
           <Link
             to="/addProductPage"
-            className="text-white flex justify-center items-center font-win text-sm bg-[#331FA8] px-14 py-3 gap-2 rounded-md"
+            className="text-white flex justify-center items-center font-win text-sm bg-[#331FA8] w-full sm:w-64 md:w-64 px-14 py-3 gap-2 rounded-md"
           >
             <FiPlus className="text-white text-lg" />
             Menambahkan
           </Link>
         </div>
-        <div className="overflow-x-scroll pt-5  w-full">
-          <table className="w-full mt-5 rounded-md">
+        <div className="overflow-x-scroll pt-3  w-full">
+          <table className="w-full rounded-md">
             <thead className="bg-[#6F6A6A]/10">
               <tr className="rounded-xl">
                 <th className="font-medium opacity-70 text-sm font-win w-20 px-3 py-3">
@@ -120,7 +135,7 @@ export default function ProductPage() {
                       {product.category}
                     </td>
                     <td className="text-center text-md font-win font-medium">
-                      <ul className="flex justify-around items-center">
+                      <ul className="flex justify-around items-center gap-2">
                         <Link
                           to={`/editProductPage/${product.id}`}
                           className="px-3 py-3 border border-black rounded-full border-solid"
@@ -134,11 +149,7 @@ export default function ProductPage() {
                           <FiEye className="text-xl" />
                         </div>
                         <a
-                          onClick={() =>
-                            APIProduct.deleteProduct(product.id).then(() =>
-                              location.reload()
-                            )
-                          }
+                          onClick={() => handleDelete(product.id)}
                           className="px-3 py-3 border border-black  rounded-full border-solid"
                         >
                           <FiTrash className="text-xl" />

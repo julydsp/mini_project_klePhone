@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { APIAuth } from "../configs/apis/authAPI";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -25,7 +27,11 @@ export const LoginPage = () => {
         email: user.email,
         password: user.password,
       });
-      alert("Berhasil Login");
+     await Swal.fire({
+       icon: "success",
+       title: "Berhasil Login",
+       text: "Anda berhasil masuk ke akun Anda!",
+     });
       navigate("/");
     } catch (error) {
       setErrorMessage(true);

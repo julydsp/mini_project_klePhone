@@ -1,10 +1,10 @@
 import Cookies from "js-cookie";
 import { signOut } from "firebase/auth";
 import {auth} from "../configs/firebase";
+import Swal from "sweetalert2";
 
 
 export class AuthService {
-    
   isAuthorized() {
     if (this.getToken() || this.getRefreshToken()) return true;
     return false;
@@ -30,14 +30,23 @@ export class AuthService {
     Cookies.remove("idToken");
     Cookies.remove("refreshToken");
   }
-  
+
   async logOut() {
     try {
       await signOut(auth);
       this.clearCredentialsFromCookie();
-      window.location.href = "/";
+      await Swal.fire({
+        icon: "success",
+        title: "Log out Berhasil",
+        text: "Anda berhasil keluar dari akun Anda!",
+      });
+      window.location.href = "/loginPage";
     } catch (err) {
-      console.error(err);
+      await Swal.fire({
+        icon: "error",
+        title: "Log out Gagal",
+        text: "Anda gagal keluar dari akun Anda!",
+      });
     }
   }
 }
