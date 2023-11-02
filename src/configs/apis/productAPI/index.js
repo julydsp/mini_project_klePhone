@@ -44,7 +44,6 @@ export const APIProduct = {
 
   deleteProduct: async (id) => {
     try {
-      console.log(id);
       const productRef = doc(db, "product", id);
       await deleteDoc(productRef);
       return;
